@@ -1,0 +1,62 @@
+.navbar{
+   background-color:#ee0979;
+   padding: 10px;
+}
+.navbar a{
+    color: white;
+}
+.container{
+    margin-top:100px;
+}
+.nav .open>a, .nav .open>a:focus, .nav .open>a:hover {
+    background-color: transparent;
+    border-color: #337ab7;
+}
+
+
+.nav>li>a:focus, .nav>li>a:hover {
+    text-decoration: none;
+    background-color:transparent;
+}
+
+.table>tbody>tr>td, .table>tbody>tr>th, .table>tfoot>tr>td, .table>tfoot>tr>th, .table>thead>tr>td, .table>thead>tr>th {
+    padding: 8px;
+    line-height: 1.42857143;
+    vertical-align: middle;
+    text-align: center;
+}
+
+td{
+    font-size: 15px;
+}
+.table{
+    margin-bottom: 0px;
+}
+
+.tableFixHead {
+    overflow-y: auto;
+    height: 80px;
+    
+  }
+  
+  .tableFixHead table {
+    border-collapse: collapse;
+    width: 100%;
+   
+  }
+  
+  .tableFixHead th,
+  .tableFixHead td {
+    padding: 8px 16px;
+
+  }
+  
+
+  .tableFixHead th {
+    position: sticky;
+    top: 0;
+    color: white;
+  }
+  th{
+      background-color: #ee0979;
+  }
