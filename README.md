@@ -1,1 +1,3 @@
 # stockmaster
+HI i ama
+
