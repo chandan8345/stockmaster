@@ -25,8 +25,8 @@
           <a class="dropdown-toggle" data-toggle="dropdown" href="#">Products <span class="caret"></span></a>
           <ul class="dropdown-menu">
             <li><a href="{{'/product'}}">Add Product</a></li>
-            <li><a href="#">Manage Cagtegory</a></li>
-            <li><a href="{{'/stock'}}">Stock</a></li>
+            <li><a href="{{'/stock'}}">Manage Stock</a></li>
+            <li><a href="#">Manage Products</a></li>
           </ul>
         </li>
         <li class="dropdown">

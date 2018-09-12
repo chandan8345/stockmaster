@@ -86,6 +86,8 @@ $searchBrand=$compact['b'];
   </p>
 
   <div class="modal fade" id="{{$row->id}}" tabindex="-1" role="dialog" aria-labelledby="edit" aria-hidden="true">
+      <form action="/updateProduct/{{$row->id}}" method="post">
+      <input type ="hidden" id="token" name="_token" value ="<?php echo csrf_token(); ?>" >
       <div class="modal-dialog">
     <div class="modal-content">
           <div class="modal-header">
@@ -146,11 +148,12 @@ $searchBrand=$compact['b'];
 </form>
       </div>
           <div class="modal-footer ">
-        <button type="button" class="btn btn-success btn-lg" style="width: 100%;"><span class="glyphicon glyphicon-ok-sign"></span> Update</button>
+        <button type="submit" class="btn btn-success btn-lg" style="width: 100%;"><span class="glyphicon glyphicon-ok-sign"></span> Update</button>
       </div>
         </div>
     <!-- /.modal-content --> 
   </div>
+  </form>
       <!-- /.modal-dialog --> 
     </div>
 

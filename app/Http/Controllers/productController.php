@@ -78,4 +78,32 @@ class productController extends Controller
             return redirect('/stock');
         }
     }
+    public function updateProduct(Request $request,$id){
+        $validator = Validator::make($request->all(), [
+            'name' => 'required',
+            'category' => 'required',
+            'brand' => 'required',
+            'unit' => 'required',
+            'purchase' => 'required',
+            'sale' => 'required'
+           ]
+        );
+        $name=$request->input('name');
+        $category=$request->input('category');
+        $brand=$request->input('brand');
+        $unit=$request->input('unit');
+        $purchase=$request->input('purchase');
+        $sell=$request->input('sale');
+
+        $data=array('name'=>$name,'category_id'=>$category,'brand'=>$brand,'unit'=>$unit,'purchase'=>$purchase,'sell'=>$sell,'status'=>'1');
+        if($data != ""){
+        DB::table('products')->update($data)->where(id,$id);
+        //$request->session()->flash('alert-success', 'Product Successfully Added!');
+        $data="";}
+        return redirect('/stocksearch');
+            
+    }
+    public function deleteProduct(){
+
+    }
 }
