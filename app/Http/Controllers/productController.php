@@ -44,16 +44,26 @@ class productController extends Controller
         return redirect('/product');
     }
     public function stock(){
+        $product[0]='';
+        $products=DB::table('products')->get();
+        foreach($products as $row){
+            $product[]=$row->name;  
+        }
         $category=DB::table('category')->where('status','1')->get();
         $brand=DB::table('brand')->where('status','1')->get();
-        return view('stock')->with('category',$category)->with('brand',$brand);
+        return view('stock')->with('category',$category)->with('brand',$brand)->with('product',$product);
     }
     public function stocksearch(Request $request){
+        $product[0]='';
+        $products=DB::table('products')->get();
+        foreach($products as $row){
+            $product[]=$row->name;  
+        }
         $name=$request->input('n');
         $category=$request->input('c');
         $brand=$request->input('b');
         if(!empty($name) || !empty($category) || !empty($brand)){
-            $sql="select products.id as id,products.name as name,category.name as category,brand.name as brand,products.unit as unit,products.sell as sell,products.purchase as purchase from products,category,brand where products.id>0 and products.category_id=category.id and products.brand=brand.id";
+            $sql="select products.id as id,products.name as name,category.name as category,products.category_id as category_id,products.brand as brand_id,brand.name as brand,products.unit as unit,products.sell as sell,products.purchase as purchase from products,category,brand where products.id>0 and products.category_id=category.id and products.brand=brand.id";
             if(!empty($name)){
                 $sql =$sql." and products.name like '%$name%'";
             }
@@ -68,7 +78,7 @@ class productController extends Controller
             if(count($data)>0){
             $category=DB::table('category')->where('status','1')->get();
             $brand=DB::table('brand')->where('status','1')->get();
-            return view('stock',compact('compact'))->with('data',$data)->with('category',$category)->with('brand',$brand);
+            return view('stock',compact('compact'))->with('data',$data)->with('category',$category)->with('brand',$brand)->with('product',$product);
             }else{
                 $request->session()->flash('alert-danger', 'Sorry not found any product !');  
                 return redirect('/stock');
@@ -97,10 +107,10 @@ class productController extends Controller
 
         $data=array('name'=>$name,'category_id'=>$category,'brand'=>$brand,'unit'=>$unit,'purchase'=>$purchase,'sell'=>$sell,'status'=>'1');
         if($data != ""){
-        DB::table('products')->update($data)->where(id,$id);
+        DB::table('products')->where('id',$id)->update($data);
         //$request->session()->flash('alert-success', 'Product Successfully Added!');
         $data="";}
-        return redirect('/stocksearch');
+        return redirect('/stock');
             
     }
     public function deleteProduct(){

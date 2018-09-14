@@ -9,6 +9,13 @@ $searchBrand=$compact['b'];
 }
 ?>
 @include('layout.header')
+<style>
+.ui-menu .ui-menu-item a{
+    color: #96f226;
+    border-radius: 0px;
+    border: 1px solid #454545;
+}
+</style>
 <div class="container">
 
 <div class="flash-message">
@@ -24,7 +31,7 @@ $searchBrand=$compact['b'];
         <div class="col-md-4">
     <div class="form-group">
     <label for="exampleInputEmail1">Product Name : </label>
-    <input type="text" class="form-control" name="n" id="exampleInputEmail1" aria-describedby="emailHelp" placeholder="" value="<?php if(!empty($searchName)){echo $searchName;} ?>">
+    <input type="text" id="search" class="form-control" name="n" id="exampleInputEmail1" aria-describedby="emailHelp" placeholder="" value="<?php if(!empty($searchName)){echo $searchName;} ?>">
     <small id="unitMsg" class="form-text hidden">please input here product unit</small>
     </div>
     </div>
@@ -92,7 +99,7 @@ $searchBrand=$compact['b'];
     <div class="modal-content">
           <div class="modal-header">
         <button type="button" class="close" data-dismiss="modal" aria-hidden="true"><span class="glyphicon glyphicon-remove" aria-hidden="true"></span></button>
-        <h4 class="modal-title custom_align" id="Heading">{{$row->name}}</h4>
+        <h4 class="modal-title custom_align" id="Heading">Product Upgrade</h4>
       </div>
           <div class="modal-body">
           <form action="/storeProduct" method="post">
@@ -109,7 +116,7 @@ $searchBrand=$compact['b'];
   <select class="form-control" id="" name="category">
     <option value="0">Select Category</option>
     @foreach($category as $rw)
-    <option value="{{ $rw->id}}">{{ $rw->name}}</option>
+    <option value="{{ $rw->id}}"  <?php if($row->category_id == $rw->id){echo "selected";} ?> >{{ $rw->name}}</option>
     @endforeach
   </select>
 </div>
@@ -120,7 +127,7 @@ $searchBrand=$compact['b'];
   <select class="form-control" id="brand" name="brand">
   <option value="0">Select Brand</option>
     @foreach($brand as $ro)
-    <option value="{{ $ro->id}}">{{ $ro->name}}</option>
+    <option value="{{ $ro->id}}" <?php if($row->brand_id == $ro->id){echo "selected";} ?> >{{ $ro->name}}</option>
     @endforeach
   </select>
 </div>
@@ -194,3 +201,12 @@ $searchBrand=$compact['b'];
 
 </div>
 @include('layout.fotter')
+<script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+	<script type="text/javascript">
+  $( function() {
+    var availableTags =  <?php echo json_encode($product); ?>;
+    $( "#search" ).autocomplete({
+      source: availableTags
+    });
+  } );
+  </script>
