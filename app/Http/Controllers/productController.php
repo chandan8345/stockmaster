@@ -88,32 +88,21 @@ class productController extends Controller
             return redirect('/stock');
         }
     }
-    public function updateProduct(Request $request,$id){
-        $validator = Validator::make($request->all(), [
-            'name' => 'required',
-            'category' => 'required',
-            'brand' => 'required',
-            'unit' => 'required',
-            'purchase' => 'required',
-            'sale' => 'required'
-           ]
-        );
-        $name=$request->input('name');
-        $category=$request->input('category');
-        $brand=$request->input('brand');
-        $unit=$request->input('unit');
-        $purchase=$request->input('purchase');
-        $sell=$request->input('sale');
-
+    public function updateProduct(Request $req){
+        $id=$req->id;
+        $name=$req->name;
+        $category=$req->category;
+        $brand=$req->brand;
+        $unit=$req->unit;
+        $purchase=$req->purchase;
+        $sell=$req->sales;
         $data=array('name'=>$name,'category_id'=>$category,'brand'=>$brand,'unit'=>$unit,'purchase'=>$purchase,'sell'=>$sell,'status'=>'1');
         if($data != ""){
         DB::table('products')->where('id',$id)->update($data);
-        //$request->session()->flash('alert-success', 'Product Successfully Added!');
         $data="";}
-        return redirect('/stock');
-            
     }
-    public function deleteProduct(){
-
+    public function deleteProduct(Request $req){
+        $id=$req->id;
+        DB::table('products')->where('id',$id)->delete();
     }
 }
