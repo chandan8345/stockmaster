@@ -27,7 +27,7 @@
           <ul class="dropdown-menu">
             <li><a href="{{'/product'}}">Add Product</a></li>
             <li><a href="{{'/stock'}}">Manage Stock</a></li>
-            <li><a href="#">Manage Products</a></li>
+            <li><a href="{{'/Settings'}}">Settings</a></li>
           </ul>
         </li>
         <li class="dropdown">

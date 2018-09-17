@@ -58,7 +58,7 @@ $searchBrand=$compact['b'];
 </div>
     </div>
     <div class="col-md-12">
-    <button type="submit" class="btn btn-primary btn-block" style="width: 100%;margin-bottom:10px;"><span class="glyphicon glyphicon-search"></span> Search</button>
+    <button type="submit" class="btn btn-primary btn-block search" style="width: 100%;margin-bottom:10px;"><span class="glyphicon glyphicon-search"></span> Search</button>
         </div>
 </form>
 </div>
@@ -132,9 +132,14 @@ $searchBrand=$compact['b'];
     </div>
     <div class="col-md-12">
     <div class="form-group">
-    <label for="exampleInputEmail1">Unit</label>
-    <input type="text" id="unit" class="form-control" name="unit" id="exampleInputEmail1"  aria-describedby="emailHelp" placeholder="" value="{{ $row->unit }}">
-    </div>
+  <label for="sel1">Unit</label>
+  <select class="form-control" id="unit" name="unit">
+  <option value="0">Select Unit</option>
+    @foreach($unit as $w)
+    <option value="{{ $w->id}}" <?php if($row->unit_id == $w->id){echo "selected";} ?> >{{ $w->name}}</option>
+    @endforeach
+  </select>
+</div>
     </div>
     <div class="col-md-12">
     <div class="form-group">
@@ -241,7 +246,9 @@ $searchBrand=$compact['b'];
                         },
 						success:function(){
 						$(".hide-modal").modal('hide');
+
 						}
-					});	
+					});  
 	    });
+      
   </script>

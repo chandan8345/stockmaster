@@ -60,10 +60,15 @@
     </div>
     <div class="col-md-6">
     <div class="form-group">
-    <label for="exampleInputEmail1">Unit</label>
-    <input type="text" class="form-control" name="unit" id="exampleInputEmail1" aria-describedby="emailHelp" placeholder="">
-    <small id="unitMsg" class="form-text">please input here product unit</small>
-    </div>
+  <label for="sel1">Unit</label>
+  <select class="form-control" id="unit" name="unit">
+  <option value="0">Select Unit</option>
+    @foreach($unit as $w)
+    <option value="{{ $w->id}}">{{ $w->name}}</option>
+    @endforeach
+  </select>
+  <small id="nameMsg" class="form-text ">select the brand what you need</small>
+</div>
     </div>
 </div>
 <div class="row">
@@ -86,7 +91,7 @@
     <input type="checkbox" class="form-check-input" id="exampleCheck1">
     <label class="form-check-label" for="exampleCheck1">Check me out</label>
   </div>
-  <button type="submit" class="btn btn-default btn-block">Save</button>
+  <button type="submit" class="btn btn-primary btn-block">Save</button>
 </form>
   </div>
 </div>

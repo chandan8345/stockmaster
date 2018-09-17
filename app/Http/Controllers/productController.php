@@ -9,9 +9,10 @@ use Input;
 class productController extends Controller
 {
     public function index(){
+        $unit=DB::table('unit')->where('status','1')->get();
         $category=DB::table('category')->where('status','1')->get();
         $brand=DB::table('brand')->where('status','1')->get();
-        return view('product')->with('category',$category)->with('brand',$brand);
+        return view('product')->with('category',$category)->with('brand',$brand)->with('unit',$unit);
     }
     public function store(Request $request){
         $validator = Validator::make($request->all(), [
@@ -49,6 +50,7 @@ class productController extends Controller
         foreach($products as $row){
             $product[]=$row->name;  
         }
+        $unit=DB::table('unit')->where('status','1')->get();
         $category=DB::table('category')->where('status','1')->get();
         $brand=DB::table('brand')->where('status','1')->get();
         return view('stock')->with('category',$category)->with('brand',$brand)->with('product',$product);
@@ -63,7 +65,7 @@ class productController extends Controller
         $category=$request->input('c');
         $brand=$request->input('b');
         if(!empty($name) || !empty($category) || !empty($brand)){
-            $sql="select products.id as id,products.name as name,category.name as category,products.category_id as category_id,products.brand as brand_id,brand.name as brand,products.unit as unit,products.sell as sell,products.purchase as purchase from products,category,brand where products.id>0 and products.category_id=category.id and products.brand=brand.id";
+            $sql="select products.id as id,products.name as name,category.name as category,products.category_id as category_id,products.brand as brand_id,brand.name as brand,products.unit as unit_id,unit.name as unit,products.sell as sell,products.purchase as purchase from products,category,brand,unit where products.id>0 and products.category_id=category.id and products.brand=brand.id and products.unit=unit.id";
             if(!empty($name)){
                 $sql =$sql." and products.name like '%$name%'";
             }
@@ -76,9 +78,10 @@ class productController extends Controller
             $compact=array('n'=>$name, 'c'=>$category, 'b'=>$brand);
             $data=DB::select($sql);
             if(count($data)>0){
+            $unit=DB::table('unit')->where('status','1')->get();
             $category=DB::table('category')->where('status','1')->get();
             $brand=DB::table('brand')->where('status','1')->get();
-            return view('stock',compact('compact'))->with('data',$data)->with('category',$category)->with('brand',$brand)->with('product',$product);
+            return view('stock',compact('compact'))->with('data',$data)->with('category',$category)->with('brand',$brand)->with('product',$product)->with('unit',$unit);
             }else{
                 $request->session()->flash('alert-danger', 'Sorry not found any product !');  
                 return redirect('/stock');
@@ -104,5 +107,32 @@ class productController extends Controller
     public function deleteProduct(Request $req){
         $id=$req->id;
         DB::table('products')->where('id',$id)->delete();
+    }
+    public function cbu(){
+        $unit=DB::table('unit')->where('status','1')->orderBy('name', 'asc')->get();
+        $category=DB::table('category')->where('status','1')->orderBy('name', 'asc')->get();
+        $brand=DB::table('brand')->where('status','1')->orderBy('name', 'asc')->get();
+        return view('cbu')->with('category',$category)->with('brand',$brand)->with('unit',$unit);
+    }
+    public function updateCategory(Request $req){
+        $id=$req->id;
+        $name=$req->name;
+        $data=array('name'=>$name);
+        DB::table('category')->where('id',$id)->update($data);
+        echo "category update";
+    }
+    public function updateBrand(Request $req){
+        $id=$req->id;
+        $name=$req->name;
+        $data=array('name'=>$name);
+        DB::table('brand')->where('id',$id)->update($data);
+        echo "brand update";
+    }
+    public function updateUnit(Request $req){
+        $id=$req->id;
+        $name=$req->name;
+        $data=array('name'=>$name);
+        DB::table('unit')->where('id',$id)->update($data);
+        echo "unit update";
     }
 }
