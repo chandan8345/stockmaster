@@ -9,3 +9,6 @@ Route::post('/deleteProduct','productController@deleteProduct');
 Route::post('/updateCategory','productController@updateCategory');
 Route::post('/updateBrand','productController@updateBrand');
 Route::post('/updateUnit','productController@updateUnit');
+Route::post('/addCategory','productController@addCategory');
+Route::post('/addBrand','productController@addBrand');
+Route::post('/addUnit','productController@addUnit');

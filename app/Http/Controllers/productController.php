@@ -135,4 +135,22 @@ class productController extends Controller
         DB::table('unit')->where('id',$id)->update($data);
         echo "unit update";
     }
+    public function addCategory(Request $req){
+        $name=$req->name;
+        $data=array('name'=>$name,'status'=>1);
+        DB::table('category')->insert($data);
+        echo "insert category";
+    }
+    public function addBrand(Request $req){
+        $name=$req->name;
+        $data=array('name'=>$name,'status'=>1);
+        DB::table('brand')->insert($data);
+        echo "insert brand";
+    }
+    public function addUnit(Request $req){
+        $name=$req->name;
+        $data=array('name'=>$name,'status'=>1);
+        DB::table('unit')->insert($data);
+        echo "insert unit";
+    }
 }

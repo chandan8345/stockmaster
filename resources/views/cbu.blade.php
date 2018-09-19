@@ -20,7 +20,7 @@ span{margin-right:4px;}
                             <marquee behavior="slide" direction="down"><h3>CATEGORY</h3></marquee>
                                 <div class="space"></div>
     						</div>
-                                <ul class="list-group"> <?php $i=0;?>
+                                <ul class="list-group categorylist" id="categorylist"> <?php $i=0;?>
                                     @foreach($category as $row)
                                     <?php $i++;?>
                                         <li class="list-group-item" onblur="category({{$row->id}})" id="{{$row->id}}"  contenteditable  >{{$row->name}}</li>
@@ -29,7 +29,7 @@ span{margin-right:4px;}
                                 
                                 <div class="try">
                                     <p class="price"><span class="glyphicon glyphicon glyphicon-save"></span> {{$i}}</p>
-                                    <a class="btn btn-primary category" href="#" type="button">NEW</a>
+                                    <a class="btn btn-primary" href="#" onclick="addCategory()" type="button">NEW</a>
                                 </div>
                             </div>
                         <!-- Pack 2-->
@@ -38,7 +38,7 @@ span{margin-right:4px;}
                                 <marquee behavior="slide" direction="down"><h3>BRAND</h3></marquee>
                                 <div class="space"></div>
     						</div>
-                                <ul class="list-group">
+                                <ul class="list-group brandlist">
                                 <?php $i=0;?>
                                     @foreach($brand as $row)
                                     <?php $i++; ?>
@@ -48,7 +48,7 @@ span{margin-right:4px;}
                                 
                                 <div class="try">
                                     <p class="price"><span class="glyphicon glyphicon glyphicon-save"></span> {{$i}}</p>
-                                    <a class="btn btn-primary brand" href="#" type="button">NEW</a>
+                                    <a class="btn btn-primary" href="#" onclick="addBrand()"  type="button">NEW</a>
 
                                 </div>
                             </div>
@@ -60,7 +60,7 @@ span{margin-right:4px;}
                                 <marquee behavior="slide" direction="down"><h3>UNIT</h3></marquee>
                                 <div class="space"></div>
 							</div>
-                                <ul class="list-group">
+                                <ul class="list-group unitlist">
                                     <?php $i=0;?>
                                     @foreach($unit as $row)
                                     <?php $i++;?>
@@ -70,7 +70,7 @@ span{margin-right:4px;}
                                 
                                 <div class="try">
                                     <p class="price"><span class="glyphicon glyphicon glyphicon-save"></span>  {{$i}}</p>
-                                    <button class="btn btn-primary unit" href="#" type="button">NEW</button></li>
+                                    <button class="btn btn-primary" href="#" onclick="addUnit()"  type="button">NEW</button></li>
                                 </div>
                             </div>
 @include('layout.fotter')
@@ -120,4 +120,55 @@ span{margin-right:4px;}
 						}
 					});	
         }
+        function addCategory(){
+            $('.categorylist').append("<li class='list-group-item' id='item' onblur='insertCategory()' contenteditable></li>");
+        }
+        function insertCategory(){
+            var item=$('#item').html();
+            $.ajax({
+                        type: "POST",
+                        url: '{{URL::to("/addCategory")}}',
+	                      data: {
+                        name:item,
+                        _token:$("#token").val()
+                        },
+						success:function(response){
+                            console.log(response);
+						}
+					});
+        }
+        function addBrand(){
+            $('.brandlist').append("<li class='list-group-item' id='item' onblur='insertBrand()' contenteditable></li>");
+        }
+        function insertBrand(){
+            var item=$('#item').html();
+            $.ajax({
+                        type: "POST",
+                        url: '{{URL::to("/addBrand")}}',
+	                      data: {
+                        name:item,
+                        _token:$("#token").val()
+                        },
+						success:function(response){
+                            console.log(response);
+						}
+					});
+        } 
+        function addUnit(){
+            $('.unitlist').append("<li class='list-group-item' id='item' onblur='insertUnit()' contenteditable></li>");
+        }
+        function insertUnit(){
+            var item=$('#item').html();
+            $.ajax({
+                        type: "POST",
+                        url: '{{URL::to("/addUnit")}}',
+	                      data: {
+                        name:item,
+                        _token:$("#token").val()
+                        },
+						success:function(response){
+                            console.log(response);
+						}
+					});
+        }     
 </script>
