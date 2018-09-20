@@ -8,6 +8,7 @@
 .container{
     margin-top:100px;
 }
+
 .nav .open>a, .nav .open>a:focus, .nav .open>a:hover {
     background-color: transparent;
     border-color: #337ab7;
