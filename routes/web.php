@@ -16,3 +16,4 @@ Route::post('/addUnit','productController@addUnit');
 
 //Purchase Section
 Route::get('/purchase','purchaseController@index');
+Route::post('/searchProduct','purchaseController@searchProduct');

@@ -193,7 +193,7 @@ $searchBrand=$compact['b'];
         
 </table>          
             </div>
-            <p id="unitMsg" class="form-text " style="margin:10px 20px 0px 20px;">Showing Results 100</p>       
+            <p id="unitMsg" class="form-text " style="margin:10px 20px 0px 20px;">Showing Result {{$i=$i-1}}</p>       
         </div>
         <?php } ?>
 	</div>

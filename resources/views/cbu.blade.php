@@ -77,6 +77,7 @@ span{margin-right:4px;}
 <script type="text/javascript">
         function category(id){
             var name=$("#"+id).html();
+            if(name.length>0){
             $.ajax({
                         type: "POST",
                         url: '{{URL::to("/updateCategory")}}',
@@ -89,9 +90,11 @@ span{margin-right:4px;}
                             console.log(response);
 						}
 					});	
+            }        
         }
         function brand(id){
             var name=$("#"+id).html();
+            if(name.length>0){
             $.ajax({
                         type: "POST",
                         url: '{{URL::to("/updateBrand")}}',
@@ -104,9 +107,11 @@ span{margin-right:4px;}
                             console.log(response);
 						}
 					});	
+            }        
         }
         function unit(id){
             var name=$("#"+id).html();
+            if(name.length>0){
             $.ajax({
                         type: "POST",
                         url: '{{URL::to("/updateUnit")}}',
@@ -119,12 +124,14 @@ span{margin-right:4px;}
                             console.log(response);
 						}
 					});	
+            }        
         }
         function addCategory(){
             $('.categorylist').append("<li class='list-group-item' id='ic' onblur='insertCategory()' contenteditable></li>");
         }
         function insertCategory(){
             var item=$('#ic').html();
+            if(item.length>0){
             $.ajax({
                         type: "POST",
                         url: '{{URL::to("/addCategory")}}',
@@ -136,12 +143,14 @@ span{margin-right:4px;}
                             console.log(response);
 						}
 					});
+            }        
         }
         function addBrand(){
             $('.brandlist').append("<li class='list-group-item' id='ib' onblur='insertBrand()' contenteditable></li>");
         }
         function insertBrand(){
             var item=$('#ib').html();
+            if(item.length>0){
             $.ajax({
                         type: "POST",
                         url: '{{URL::to("/addBrand")}}',
@@ -153,12 +162,14 @@ span{margin-right:4px;}
                             console.log(response);
 						}
 					});
+            }        
         } 
         function addUnit(){
             $('.unitlist').append("<li class='list-group-item' id='iu' onblur='insertUnit()' contenteditable></li>");
         }
         function insertUnit(){
             var item=$('#iu').html();
+            if(item.length>0){
             $.ajax({
                         type: "POST",
                         url: '{{URL::to("/addUnit")}}',
@@ -170,5 +181,6 @@ span{margin-right:4px;}
                             console.log(response);
 						}
 					});
+            }        
         }     
 </script>
