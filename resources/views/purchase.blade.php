@@ -17,6 +17,7 @@ h3{
     font-family: Impact, Haettenschweiler, 'Arial Narrow Bold', sans-serif;
 }
 .dashbord1{
+    min-height: 500px;
     margin-top:10px; 
     margin-bottom:10px; 
     padding-bottom: 10px;
@@ -25,7 +26,8 @@ h3{
     font-family: Cambria, Cochin, Georgia, Times, 'Times New Roman', serif
 }
 .dashbord2{
-    border-left: 2px solid whitesmoke;
+    min-height: 500px;
+    border-right: 5px solid whitesmoke;
     margin-top:10px; 
     margin-bottom:10px; 
     background-color: white;
@@ -35,9 +37,8 @@ h3{
 }
 .table{
     margin: 5px 0px 10px 0px;
-    max-height: 100px;
+    text-align: left;
 }
-
 hr { 
     display: block;
     margin-top: 0.5em;
@@ -89,7 +90,7 @@ hr {
 }
 
 .shape-text{
-	color:#fff; font-size:12px; font-weight:bold; position:relative; right:-40px; top:2px; white-space: nowrap;
+	color:#fff; font-size:10px; font-weight:bold; position:relative; right:-35px; top:2px; white-space: nowrap;
 	-ms-transform:rotate(30deg); /* IE 9 */
 	-o-transform: rotate(360deg);  /* Opera 10.5 */
 	-webkit-transform:rotate(30deg); /* Safari and Chrome */
@@ -131,18 +132,47 @@ hr {
 select{
     max-height:100px;
 }
+input[type=number]{
+    width: 50px;
+} 
+
 </style>
 <input type ="hidden" id="token" name="_token" value ="<?php echo csrf_token(); ?>" >
 <div class="container">
+    <div class="col-md-7 dashbord2">
+        <h3>Product Dashbord</h3>
+        <div class="col-md-12" style="margin-top:10px;">
+        <div class="form-group">
+        <input type="text" id="nameProduct" onblur="searchProduct()" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" placeholder="Quick Search">
+        </div>
+        </div>
+        <div class="col-md-6">
+        <div class="form-group">
+            <select class="form-control selectpicker" onchange="searchCategory()" id="selectCategory" placeholder="" data-live-search="true">
+            <option value="0">Select Category</option>
+            @foreach($category as $row)
+            <option value="{{ $row->id}}"  <?php if(!empty($searchCategory)){if($searchCategory == $row->id){echo "selected";}} ?>>{{ $row->name}}</option>
+            @endforeach
+            </select> 
+           </div>
+        </div>
+        <div class="col-md-6">
+        <div class="form-group">
+          <select class="form-control selectpicker" onchange="searchBrand()" id="selectBrand" placeholder="" data-live-search="true">
+          <option value="0">Select Brand</option>
+          @foreach($brand as $row)
+            <option value="{{ $row->id}}" <?php if(!empty($searchBrand)){if($searchBrand == $row->id){echo "selected";}} ?>>{{ $row->name}}</option>
+            @endforeach
+          </select>
+          </div>
+        </div>
+        <hr>
+        <p>Choose Product</p>
+        <div class="listdiv">
+        </div>
+        </div>
 <div class="col-md-5 dashbord1">
-<h3>Payment Panel</h3>
-<ul class="nav nav-tabs">
-        <li class="active"><a data-toggle="tab" href="#home">Payment 1</a></li>
-        <li><a data-toggle="tab" href="#menu1">Payment 2</a></li>
-      </ul>
-      
-      <div class="tab-content">
-        <div id="home" class="tab-pane fade in active">
+<h3>Purchase Panel</h3>
                 <div class="form-group">
                         <select class="form-control selectpicker" id="selectSupplier" placeholder="" data-live-search="true">
                                 <option>Local Supplier</option>
@@ -150,10 +180,10 @@ select{
                                 
                             </select> 
                 </div>
-                        <table class="table table-bordered table-hover">
+                        <table class="table table-bordered table-hover t" hidden>
                     <thead>
                       <tr>
-                        <th>Name</th>
+                        <th class="tdt">Name</th>
                         <th>Price</th>
                         <th>Qty</th>
                         <th>Total</th>
@@ -162,46 +192,11 @@ select{
                         </th>
                       </tr>
                     </thead>
-                    <tbody>
-                      <tr>
-                        <td>Dell</td>
-                        <td>8000</td>
-                        <td>8</td>
-                        <td>80000</td>
-                        <td>
-                                <span class="glyphicon glyphicon-trash"></span>
-                        </td>            
-                      </tr>
-                      <tr>
-                            <td>Dell</td>
-                            <td>8000</td>
-                            <td>8</td>
-                            <td>80000</td>
-                            <td>
-                                    <span class="glyphicon glyphicon-trash"></span>
-                            </td>            
-                          </tr>
-                          <tr>
-                                <td>Dell</td>
-                                <td>8000</td>
-                                <td>8</td>
-                                <td>80000</td>
-                                <td>
-                                        <span class="glyphicon glyphicon-trash"></span>
-                                </td>            
-                              </tr>
-                              <tr>
-                                    <td>Dell</td>
-                                    <td>8000</td>
-                                    <td>8</td>
-                                    <td>80000</td>
-                                    <td>
-                                            <span class="glyphicon glyphicon-trash"></span>
-                                    </td>            
-                                  </tr>
+                    <tbody id="bodyt">
 
                     </tbody>
                   </table>
+<div class="section2" hidden>                  
                   <div class="col-md-6" style="text-align:left;padding:0px">
                         <h4>Total Item: 2</h4>
                     </div>
@@ -227,145 +222,9 @@ select{
                             <div class="col-md-6" style="padding:1px;">
                             <button class="btn btn-md btn-success btn-block">Payment</button>       
                             </div> 
-        </div>
-        <div id="menu1" class="tab-pane fade">
-                <div class="form-group">
-                        <select class="form-control selectpicker" id="selectSupplier" placeholder="" data-live-search="true">
-                                <option>Local Supplier</option>
-                                <option>Malaysia</option>
-                                <option>Singapore</option>
-                            </select> 
-                </div>
-                        <table class="table table-bordered table-hover">
-                    <thead>
-                      <tr>
-                        <th>Name</th>
-                        <th>Price</th>
-                        <th>Qty</th>
-                        <th>Total</th>
-                        <th>
-                                <span class="glyphicon glyphicon-trash"></span>
-                        </th>
-                      </tr>
-                    </thead>
-                    <tbody>
-                      <tr>
-                        <td>Dell</td>
-                        <td>8000</td>
-                        <td>8</td>
-                        <td>80000</td>
-                        <td>
-                                <span class="glyphicon glyphicon-trash"></span>
-                        </td>            
-                      </tr>
-                      <tr>
-                            <td>Dell</td>
-                            <td>8000</td>
-                            <td>8</td>
-                            <td>80000</td>
-                            <td>
-                                    <span class="glyphicon glyphicon-trash"></span>
-                            </td>            
-                          </tr>
-                          <tr>
-                                <td>Dell</td>
-                                <td>8000</td>
-                                <td>8</td>
-                                <td>80000</td>
-                                <td>
-                                        <span class="glyphicon glyphicon-trash"></span>
-                                </td>            
-                              </tr>
-                              <tr>
-                                    <td>Dell</td>
-                                    <td>8000</td>
-                                    <td>8</td>
-                                    <td>80000</td>
-                                    <td>
-                                            <span class="glyphicon glyphicon-trash"></span>
-                                    </td>            
-                                  </tr>
-
-                    </tbody>
-                  </table>
-                  <div class="col-md-6" style="text-align:left;padding:0px">
-                        <h4>Total Item: 2</h4>
-                    </div>
-                    <div class="col-md-6" style="text-align:right;padding:0px">
-                            <h4>Subtotal: 2000</h4>
-                    </div>
-                    <div class="col-md-6" style="text-align:left;padding:0px">
-                            <h4>Disc Amount: 10%</h4>
-                        </div>
-                        <div class="col-md-6" style="text-align:right;padding:0px">
-                                <h4>VAT: 2.00</h4>
-                        </div>    
-                       <hr>
-                       <div class="col-md-6" style="text-align:left;padding:0px">
-                            <h4>Total Payable </h4>
-                        </div>
-                        <div class="col-md-6" style="text-align:right;padding:0px">
-                                <h4>: 5000</h4>
-                        </div>   
-                        <div class="col-md-6" style="padding:1px;">
-                            <button class="btn btn-md btn-danger btn-block">Cancel</button>    
-                            </div>
-                            <div class="col-md-6" style="padding:1px;">
-                            <button class="btn btn-md btn-success btn-block">Payment</button>       
-                            </div> 
-        </div>
-      </div>      
+        </div>  
+        </div>  
 </div>    
-<div class="col-md-7 dashbord2">
-<h3>Product Dashbord</h3>
-<div class="col-md-12" style="margin-top:10px;">
-<div class="form-group">
-<input type="text" id="nameProduct" onblur="searchProduct()" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" placeholder="Quick Search">
-</div>
-</div>
-<div class="col-md-6">
-<div class="form-group">
-    <select class="form-control selectpicker" onchange="searchCategory()" id="selectCategory" placeholder="" data-live-search="true">
-    <option>Select Category</option>
-    @foreach($category as $row)
-    <option value="{{ $row->id}}"  <?php if(!empty($searchCategory)){if($searchCategory == $row->id){echo "selected";}} ?>>{{ $row->name}}</option>
-    @endforeach
-    </select> 
-   </div>
-</div>
-<div class="col-md-6">
-<div class="form-group">
-  <select class="form-control selectpicker" onchange="searchBrand()" id="selectBrand" placeholder="" data-live-search="true">
-  <option>Select Brand</option>
-  @foreach($brand as $row)
-    <option value="{{ $row->id}}" <?php if(!empty($searchBrand)){if($searchBrand == $row->id){echo "selected";}} ?>>{{ $row->name}}</option>
-    @endforeach
-  </select>
-  </select> 
-  </div>
-</div>
-<hr>
-<p>Choose Product</p>
-<section>
-  @foreach($data as $row)
-		<div class="col-xs-12 col-sm-6 col-md-4 col-lg-3">
-			<div class="offer offer-success">
-				<div class="shape">
-					<div class="shape-text">
-						{{$row->name}}						
-					</div>
-				</div>
-				<div class="offer-content">
-					<h4 class="lead">
-						A success offer
-					</h4>						
-				</div>
-			</div>
-		</div>
-@endforeach
-</section>
-</div>
-</div>
 @include('layout.fotter')
 <script type="text/javascript">
 $(function() {
@@ -394,7 +253,7 @@ $(function() {
           _token:$("#token").val()
           },
 						success:function(response){
-            console.log(response);
+              $(".listdiv").html(response);
 						}
 					});	
   }
@@ -409,7 +268,7 @@ $(function() {
           _token:$("#token").val()
           },
 						success:function(response){
-            console.log(response);
+              $(".listdiv").html(response);
 						}
 					});	
   }
@@ -424,8 +283,27 @@ $(function() {
           _token:$("#token").val()
           },
 						success:function(response){
-            console.log(response);
+            $(".listdiv").html(response);
 						}
-					});	
+					});
   }
+  function tapProduct(id){
+    var myid=$('#productid'+id).val();
+    var name=$('#productName'+id).val();
+    var sell=$('#productSell'+id).val();
+    $(".section2").show();
+    $(".table").show();
+    var tr='<tr> <td class="tdt">'+name+'</td> <td>'+sell+'</td><td class="td-q" contenteditable="true">1</td> <td>'+sell+'</td><td class="btn-del"><span class="glyphicon glyphicon-trash"></span></td>';
+			$("#bodyt").append(tr);
+  }
+  $(document).on("click",'.btn-del',function(){
+		var _tr=$(this).closest("tr").remove();
+	});
+  $(document).on("keyup",'.td-q',function(){
+  var _tr=$(this).closest("tr");
+		var _quantity=$(_tr).find('td:eq(2)').text();
+		var _single=$(_tr).find('td:eq(1)').text();
+		var _total=_quantity*_single;
+		$(_tr).find('td:eq(3)').text(_total);
+  });
   </script>
